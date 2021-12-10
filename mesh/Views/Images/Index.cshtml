@@ -1,0 +1,98 @@
+﻿@model IEnumerable<mesh.Models.Image>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+@*Style*@
+<style>
+    .img-container {
+        background-color: darkgray;
+        width: fit-content;
+        height: fit-content;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+
+    .img-wrapper {
+        background-color: lightgreen;
+        padding: 10px;
+        margin: 10px;
+        width: fit-content;
+        height: auto;
+        display: inline-block;
+        position: relative;
+    }
+
+    .img-button {
+        padding: 0;
+    }
+
+    .img-body {
+        background-color: lightcoral;
+        width: 200px;
+        height: 200px;
+    }
+
+    .heart {
+        content: '&#9829';
+        background-color: lightblue;
+        position:absolute;
+    }
+
+    .heart:before {
+        content: '\2665';
+        color: red;
+        font-size: 50px;
+    }
+</style>
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.path)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.dateTime)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.path)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.dateTime)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+            </td>
+        </tr>
+    }
+
+    <div class="img-container">
+        @foreach (var item in Model)
+        {
+            <div class="img-wrapper">
+                @Html.ActionLink("Like", "UpdateLike", new {userid = 1, imageid=item.ID})
+                <button class="heart"></button>
+                <button class="img-button">
+                    <img class="img-body" src="@item.path">
+                </button>
+                <script>console.log(@item.path)</script>
+            </div>
+        }
+    </div>
+
+</table>

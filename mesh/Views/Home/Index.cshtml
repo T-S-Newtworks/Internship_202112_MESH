@@ -1,0 +1,86 @@
+﻿@model mesh.Models.VM.Topvm
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<head>
+    @Styles.Render("~/Content/Top.css")
+</head>
+
+<div class="jumbotron">
+    <h1>MESH</h1>
+    <p id="tabcontrol">
+        <a href="#tabpage1" onclick="document.getElementById('tabpage1').style.display = 'block';
+    document.getElementById('tabpage2').style.display = 'none';
+    document.getElementById('tabpage3').style.display = 'none';">チャンネル</a>
+        <!--
+        <a href="#tabpage2" onclick="document.getElementById('tabpage1').style.display = 'none';
+    document.getElementById('tabpage2').style.display = 'block';
+    document.getElementById('tabpage3').style.display = 'none';">
+            -->
+            <a href="@Url.Action("Index", "Images")">アルバム</a>
+        <a href="#tabpage3" onclick="document.getElementById('tabpage1').style.display = 'none';
+    document.getElementById('tabpage2').style.display = 'none';
+    document.getElementById('tabpage3').style.display = 'block';">プロフィール</a>
+    </p>
+</div>
+
+<div id="tabbody" class="row">
+    <div id="tabpage1">
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Channel)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Chats)
+                </th>
+                <th>
+                </th>
+            </tr>
+
+            @foreach (var item in Model.Channel)
+            {
+                <tr>
+                    <td>
+                        <a href="@Url.Action("Index", "Chats", item)">@Html.DisplayFor(modelItem => item.Name)</a>
+                    </td>
+                    <td>
+                        @for (int i = 0; i < Model.Chats.Count; i++)
+                        {
+                            if (item == Model.Chats[i].ChannelNo)
+                            {
+                                @Html.DisplayFor(modelItem => Model.Chats[i].Text)
+                            }
+                        }
+
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+
+    <div id="tabpage2" hidden>
+        アルバムページ
+        <p>タグ名(アルバム名) <input type="text" name="albam"></p>
+    </div>
+
+    <div id="tabpage3" hidden>
+        @using (Html.BeginForm())
+        {
+            <img src="otamesi.png" alt="画像が入ります" />
+            <table>
+                <tr>
+                    <td>ID:</td>
+                    <td>@Html.TextBoxFor(a => a.User.ID, new { disabled = true })</td>
+                </tr>
+                <tr>
+                    <td>氏名:</td>
+                    <td>@Html.TextBoxFor(a => a.User.Name, new { disabled = true })</td>
+                </tr>
+            </table>
+            <a color="black" href="@Url.Action("Index", "Users")"><input type="button" value="変更"></a>
+        }
+    </div>
+</div>

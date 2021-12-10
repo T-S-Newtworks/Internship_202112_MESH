@@ -1,0 +1,213 @@
+﻿@model mesh.Models.VM.ChatVM
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Document</title>
+
+    <style>
+
+        .chat_parent {
+            /*width: 80vw;*/
+            height: 50%;
+            border: solid 3px #b6ff00;
+            background-color: red;
+            box-sizing: border-box;
+        }
+
+        .chat_main {
+            /*width: 80vw;*/
+            height: 30vw;
+            border: solid 3px #000000;
+            top: 3vw;
+            background-color: #87ceeb;
+            box-sizing: border-box;
+            overflow-y: scroll;
+            
+        }
+
+        .sendbox {
+            /*width: 80vw;*/
+            height: 10vw;
+            border: solid 3px #000000;
+            background-color: #ccc;
+            box-sizing: border-box;
+        }
+
+        .send_text, .send_image, .send_button {
+            float: left;
+            border-color: yellow;
+            width: 50%;
+        }
+
+        .send_text {
+            width: 30vw;
+            height: 6vw;
+            border: solid 0.1vw #000000;
+            margin: 2vw;
+            background-color: #ffffff;
+        }
+
+        .send_image {
+            width: 6vw;
+            height: 6vw;
+            border: solid 0.1vw #000000;
+            margin: 2vw;
+            background-color: #ffffff;
+        }
+
+        .send_button {
+            width: 10vw;
+            height: 6vw;
+            border: solid 0.1vw #000000;
+            margin: 2vw;
+            background-color: #fcff00;
+        }
+
+        .mychat {
+            /*width: 80vw;*/
+            height: 10vw;
+            border: solid 3px #000000;
+            top: 1vw;
+            margin: 2vw;
+            background-color: #b6ff00;
+            box-sizing: border-box;
+            float: right;
+            width: 50%;
+        }
+    </style>
+
+</head>
+
+
+<body>
+
+    <div class="jumbotron">
+       *<h1>@ViewBag.ChName</h1>
+    </div>
+
+    <div class="chat_main">
+        @foreach (var item in Model.Chats)
+        {
+            <div class="mychat">
+                @Html.DisplayFor(modelItem => item.Text)
+                @*@Html.ActionLink("Edit New", "Edit")
+                @using (Html.BeginForm("Edit", "Chats"))*@
+                @Html.AntiForgeryToken()
+                @*@Html.HiddenFor(modelItem => item.Id)*@
+                @*<input type="hidden" name="Id" value=@item.Id>*@
+                <div class="form-group">
+                    <div class="col-md-10">
+                        <input type="text" name="Text" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+        }
+        <script>
+            window.onload = function () {
+                // 一番下までスクロールする
+                $('.chat_main').animate({ scrollTop: $('.chat_main')[0].scrollHeight }, 'fast');
+            }
+        </script>
+    </div>
+
+    <div class="sendbox">
+        @Html.ActionLink("Create New", "Create")
+        @using (Html.BeginForm("Create", "Chats"))
+        {
+            @Html.AntiForgeryToken()
+            <div class="send_text">
+
+                <p>
+                    <div class="form-group">
+                        <div class="col-md-10">
+                            <input type="text" name="Text" class="form-control" />
+                        </div>
+                    </div>
+                </p>
+
+            </div>
+
+            <div class="send_image">
+                +
+            </div>
+
+            <div class="send_button">
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" class="btn btn-default" />
+                    </div>
+                </div>
+
+            </div>
+        }
+    </div>
+
+</body>
+
+<table width="100%" height="100%">
+    <tr>
+        <td valign="top">
+            <div style="height: 100%; overflow: auto">
+                <iframe src="http://localhost:50750/Chat/Details" style="width:20%; height:80%;">
+                </iframe>
+            </div>
+        </td>
+    </tr>
+</table>
+<table width="100%" height="100%">
+    <tr>
+        <td valign="top">
+            <div style="height: 100%; overflow: auto">
+                <iframe src="http://localhost:50750/Chat/Create" style="width:20%; height:80%;">
+                </iframe>
+            </div>
+        </td>
+    </tr>
+</table>
+
+@*<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Chats)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Chats)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.Chats)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Text)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
+
+</table>*@
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
